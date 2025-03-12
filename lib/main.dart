@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:netflix_clone/feature/splash/splash_screen.dart';
+import 'package:netflix_clone/router/router.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,7 +12,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: 'Netflix Clone',
       themeMode: ThemeMode.dark,
@@ -45,7 +46,7 @@ class MyApp extends StatelessWidget {
         // colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
 
       ),
-      home: const SplashScreen(),
+      routerConfig: appRouter,
     );
   }
 }

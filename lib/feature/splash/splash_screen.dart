@@ -1,35 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lottie/lottie.dart';
 
-class SplashScreen extends StatefulWidget {
+class SplashScreen extends HookWidget {
   const SplashScreen({super.key});
 
   @override
-  State<SplashScreen> createState() => _SplashScreenState();
-}
-
-class _SplashScreenState extends State<SplashScreen>
-    with TickerProviderStateMixin {
-  late final AnimationController _animationController;
-
-  @override
-  void initState() {
-    super.initState();
-    _animationController = AnimationController(
-      vsync: this,
-      duration: Duration(milliseconds: 4000),
-    )
-    ..forward();
-
-    _animationController.addListener(() {});
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final animationController = useAnimationController(duration: Duration(milliseconds: 3000));
+    void animationListener() {
+      if (animationController.isCompleted) {
+        context.replace('/main');
+      }
+    }
+    useEffect(() {
+      animationController.addListener(animationListener);
+      animationController.forward();
+
+      return () => animationController.removeListener(animationListener);
+    }, [animationController],);
+
     return Center(
       child: Lottie.asset(
         'assets/json/splash_animation.json',
-        controller: _animationController,
+        controller: animationController,
       ),
     );
   }
