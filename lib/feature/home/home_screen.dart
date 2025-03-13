@@ -17,40 +17,43 @@ class HomeScreen extends HookWidget {
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
     final topPadding = mediaQuery.padding.top;
+
     final scrollController = useScrollController();
-    final isCategoryPresented = useState(true);
-    final isBlurBackgroundPresented = useState(false);
+    final isCategoryVisible = useState(true);
+    final isBlurBackgroundVisible = useState(false);
+    var lastOffsetWhenDirectionChanged = useRef(0.0);
+    var lastScrollDirection = useRef(ScrollDirection.forward);
 
     void scrollListener() {
       final offset = scrollController.offset;
-      isBlurBackgroundPresented.value = offset > 30;
-      if ((offset - scrollController.initialScrollOffset).abs() >= 40) {
-        isCategoryPresented.value =
-            scrollController.position.userScrollDirection ==
-            ScrollDirection.forward;
+      final currentScrollDirection = scrollController.position.userScrollDirection;
+
+      isBlurBackgroundVisible.value = offset > 40;
+
+      if (lastScrollDirection.value != currentScrollDirection) {
+        lastScrollDirection.value = currentScrollDirection;
+        lastOffsetWhenDirectionChanged.value = offset;
+      }
+      if ((offset - lastOffsetWhenDirectionChanged.value).abs() >= 100) {
+        isCategoryVisible.value = currentScrollDirection == ScrollDirection.forward;
       }
     }
 
     useEffect(() {
       scrollController.addListener(scrollListener);
       return () => scrollController.removeListener(scrollListener);
-    }, [],);
+    }, []);
 
     return Stack(
       children: <Widget>[
         GradientBackgroundView(),
         SingleChildScrollView(
           controller: scrollController,
-          padding: EdgeInsets.only(
-            top: topPadding + actionViewHeight + categoryViewHeight + 20,
-          ),
+          padding: EdgeInsets.only(top: topPadding + actionViewHeight + categoryViewHeight + 20),
           child: Column(
             children: [
               TopMovieView(height: mediaQuery.size.height * 0.6),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: TopTodayMoviesView(),
-              ),
+              Align(alignment: Alignment.centerLeft, child: TopTodayMoviesView()),
               ...List.generate(200, (index) {
                 return Center(child: Text('Move item $index'));
               }),
@@ -58,8 +61,8 @@ class HomeScreen extends HookWidget {
           ),
         ),
         HomeHeaderView(
-          isCategoryPresented: isCategoryPresented.value,
-          isBlurBackgroundPresented: isBlurBackgroundPresented.value,
+          isCategoryPresented: isCategoryVisible.value,
+          isBlurBackgroundPresented: isBlurBackgroundVisible.value,
         ),
       ],
     );
