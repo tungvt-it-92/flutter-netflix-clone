@@ -23,7 +23,7 @@ class _MainPageState extends State<MainPage> {
 }
 
 class _BottomNavigationBar extends StatefulWidget {
-  const _BottomNavigationBar({super.key});
+  const _BottomNavigationBar();
 
   @override
   State<_BottomNavigationBar> createState() => _BottomNavigationBarState();

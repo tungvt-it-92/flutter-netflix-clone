@@ -48,7 +48,7 @@ class HomeHeaderView extends StatelessWidget {
 class _BlurBackgroundView extends StatelessWidget {
   final double height;
 
-  const _BlurBackgroundView({required this.height, super.key});
+  const _BlurBackgroundView({required this.height});
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +68,7 @@ class _BlurBackgroundView extends StatelessWidget {
 class _QuickActionView extends StatelessWidget {
   final double height;
 
-  const _QuickActionView({required this.height, super.key});
+  const _QuickActionView({required this.height});
 
   @override
   Widget build(BuildContext context) {
@@ -105,7 +105,6 @@ class _CategoriesView extends StatefulWidget {
   const _CategoriesView({
     required this.presented,
     required this.height,
-    super.key,
   });
 
   @override

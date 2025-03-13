@@ -8,12 +8,15 @@ class SplashScreen extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final animationController = useAnimationController(duration: Duration(milliseconds: 3000));
+    final animationController = useAnimationController(
+      duration: Duration(milliseconds: 3000),
+    );
     void animationListener() {
       if (animationController.isCompleted) {
         context.replace('/main');
       }
     }
+
     useEffect(() {
       animationController.addListener(animationListener);
       animationController.forward();

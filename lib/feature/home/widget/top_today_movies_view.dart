@@ -55,7 +55,7 @@ class _MovieItem extends StatelessWidget {
   final String assetBanner;
   final int index;
 
-  const _MovieItem({required this.assetBanner, required this.index, super.key});
+  const _MovieItem({required this.assetBanner, required this.index});
 
   @override
   Widget build(BuildContext context) {
@@ -105,9 +105,7 @@ class _MovieItem extends StatelessWidget {
     final titleView = Text(
       'The Lords of The Rings',
       textAlign: TextAlign.center,
-      style: TextStyle(
-        fontSize: 11,
-      ),
+      style: TextStyle(fontSize: 11),
     );
     return Container(
       width: 150,

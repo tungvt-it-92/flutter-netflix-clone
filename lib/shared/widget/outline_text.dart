@@ -11,7 +11,7 @@ class OutlineText extends StatelessWidget {
     required this.style,
     this.strokeWidth = 2,
     this.strokeColor = Colors.white,
-    super.key
+    super.key,
   });
 
   @override
@@ -25,20 +25,15 @@ class OutlineText extends StatelessWidget {
               fontSize: 100,
               fontWeight: FontWeight.w700,
               foreground:
-              Paint()
-                ..style = PaintingStyle.stroke
-                ..strokeWidth =strokeWidth
-                ..color = strokeColor,
+                  Paint()
+                    ..style = PaintingStyle.stroke
+                    ..strokeWidth = strokeWidth
+                    ..color = strokeColor,
             ),
           ),
         ),
 
-        Positioned.fill(
-          child: Text(
-            text,
-            style: style
-          ),
-        )
+        Positioned.fill(child: Text(text, style: style)),
       ],
     );
   }

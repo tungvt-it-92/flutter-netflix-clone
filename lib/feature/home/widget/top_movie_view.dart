@@ -40,7 +40,7 @@ class TopMovieView extends StatelessWidget {
 }
 
 class _ActionViews extends StatelessWidget {
-  const _ActionViews({super.key});
+  const _ActionViews();
 
   @override
   Widget build(BuildContext context) {
@@ -100,7 +100,7 @@ class _MovieCategories extends StatelessWidget {
     color: Colors.white,
   );
 
-  const _MovieCategories({super.key});
+  const _MovieCategories();
 
   @override
   Widget build(BuildContext context) {
@@ -127,7 +127,7 @@ class _MovieCategories extends StatelessWidget {
 }
 
 class _MovieTitle extends StatelessWidget {
-  const _MovieTitle({super.key});
+  const _MovieTitle();
 
   @override
   Widget build(BuildContext context) {
@@ -139,7 +139,7 @@ class _MovieTitle extends StatelessWidget {
 }
 
 class _MovieBanner extends StatelessWidget {
-  const _MovieBanner({super.key});
+  const _MovieBanner();
 
   @override
   Widget build(BuildContext context) {
@@ -154,7 +154,7 @@ class _MovieBanner extends StatelessWidget {
 }
 
 class _NetflixSeriesView extends StatelessWidget {
-  const _NetflixSeriesView({super.key});
+  const _NetflixSeriesView();
 
   @override
   Widget build(BuildContext context) {

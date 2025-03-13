@@ -26,6 +26,7 @@ class HomeScreen extends HookWidget {
 
     void scrollListener() {
       final offset = scrollController.offset;
+      // ignore: lines_longer_than_80_chars
       final currentScrollDirection = scrollController.position.userScrollDirection;
 
       isBlurBackgroundVisible.value = offset > 40;
@@ -42,18 +43,23 @@ class HomeScreen extends HookWidget {
     useEffect(() {
       scrollController.addListener(scrollListener);
       return () => scrollController.removeListener(scrollListener);
-    }, []);
+    }, [],);
 
     return Stack(
       children: <Widget>[
         GradientBackgroundView(),
         SingleChildScrollView(
           controller: scrollController,
-          padding: EdgeInsets.only(top: topPadding + actionViewHeight + categoryViewHeight + 20),
+          padding: EdgeInsets.only(
+            top: topPadding + actionViewHeight + categoryViewHeight + 20,
+          ),
           child: Column(
             children: [
               TopMovieView(height: mediaQuery.size.height * 0.6),
-              Align(alignment: Alignment.centerLeft, child: TopTodayMoviesView()),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: TopTodayMoviesView(),
+              ),
               ...List.generate(200, (index) {
                 return Center(child: Text('Move item $index'));
               }),

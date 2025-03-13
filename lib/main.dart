@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:netflix_clone/feature/splash/splash_screen.dart';
 import 'package:netflix_clone/router/router.dart';
 
 void main() {
@@ -36,15 +35,11 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.black,
         bottomNavigationBarTheme: BottomNavigationBarThemeData(
           backgroundColor: Colors.black,
-          selectedIconTheme: IconThemeData(
-            color: Colors.white,
-          ),
-          unselectedIconTheme: IconThemeData(
-            color: Colors.white60,
-          ),
+          selectedIconTheme: IconThemeData(color: Colors.white),
+          unselectedIconTheme: IconThemeData(color: Colors.white60),
         ),
-        // colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
 
+        // colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
       routerConfig: appRouter,
     );
