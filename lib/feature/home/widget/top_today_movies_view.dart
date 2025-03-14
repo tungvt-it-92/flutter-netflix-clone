@@ -1,11 +1,20 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:netflix_clone/data/api/entity/movie_entity.dart';
+import 'package:netflix_clone/feature/home/provider/today_movies_provider.dart';
+
 import '../../../shared/widget/outline_text.dart';
 
-class TopTodayMoviesView extends StatelessWidget {
+class TopTodayMoviesView extends HookConsumerWidget {
   const TopTodayMoviesView({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final AsyncValue<List<MovieEntity>> movies = ref.watch(
+      topTodayMoviesProvider,
+    );
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -22,27 +31,22 @@ class TopTodayMoviesView extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             child: Container(
               color: Colors.black,
-              child: Row(
-                spacing: 10,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  ...[
-                    'assets/images/the_lord_of_the_ring_thumbnail.jpg',
-                    'assets/images/the_lord_of_the_ring_thumbnail.jpg',
-                    'assets/images/the_lord_of_the_ring_thumbnail.jpg',
-                    'assets/images/the_lord_of_the_ring_thumbnail.jpg',
-                    'assets/images/the_lord_of_the_ring_thumbnail.jpg',
-                    'assets/images/the_lord_of_the_ring_thumbnail.jpg',
-                    'assets/images/the_lord_of_the_ring_thumbnail.jpg',
-                    'assets/images/the_lord_of_the_ring_thumbnail.jpg',
-                    'assets/images/the_lord_of_the_ring_thumbnail.jpg',
-                    'assets/images/the_lord_of_the_ring_thumbnail.jpg',
-                  ].asMap().entries.map<Widget>(
-                    (a) => _MovieItem(assetBanner: a.value, index: a.key + 1),
-                  ),
-                ],
-              ),
+              child: switch (movies) {
+                AsyncData(:final value) => Row(
+                  spacing: 10,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    ...value.asMap().entries.map<Widget>(
+                      (a) => _MovieItem(movieEntity: a.value, index: a.key + 1),
+                    ),
+                  ],
+                ),
+                AsyncError() => const Text(
+                  'Oops, something unexpected happened',
+                ),
+                _ => Container(),
+              },
             ),
           ),
         ),
@@ -52,10 +56,10 @@ class TopTodayMoviesView extends StatelessWidget {
 }
 
 class _MovieItem extends StatelessWidget {
-  final String assetBanner;
+  final MovieEntity movieEntity;
   final int index;
 
-  const _MovieItem({required this.assetBanner, required this.index});
+  const _MovieItem({required this.movieEntity, required this.index});
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +80,20 @@ class _MovieItem extends StatelessWidget {
       right: 0,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(10),
-        child: Image.asset(assetBanner, fit: BoxFit.cover),
+        child: CachedNetworkImage(
+          imageUrl: movieEntity.bannerUrl,
+          cacheKey: movieEntity.bannerUrl,
+          fit: BoxFit.cover,
+          placeholder:
+              (context, url) => Center(
+                child: SizedBox(
+                  width: 20,
+                  height: 20,
+                  child: CircularProgressIndicator(color: Colors.white,),
+                ),
+              ),
+          errorWidget: (context, url, error) => Icon(Icons.error),
+        ),
       ),
     );
 
@@ -103,7 +120,7 @@ class _MovieItem extends StatelessWidget {
     );
 
     final titleView = Text(
-      'The Lords of The Rings',
+      movieEntity.title,
       textAlign: TextAlign.center,
       style: TextStyle(fontSize: 11),
     );
@@ -122,7 +139,7 @@ class _MovieItem extends StatelessWidget {
             child: Center(
               child: Column(
                 children: [
-                  titleView,
+                  // titleView,
                   ClipRRect(
                     borderRadius: BorderRadius.circular(3),
                     child: SizedBox(
