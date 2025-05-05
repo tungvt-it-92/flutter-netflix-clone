@@ -5,6 +5,7 @@ import 'package:netflix_clone/feature/home/widget/gradient_background_view.dart'
 import 'package:netflix_clone/feature/home/widget/home_header_view.dart';
 import 'package:netflix_clone/feature/home/widget/top_movie_view.dart';
 
+import 'widget/only_on_netflix_movies_view.dart';
 import 'widget/top_today_movies_view.dart';
 
 final double actionViewHeight = 45;
@@ -60,9 +61,10 @@ class HomeScreen extends HookWidget {
                 alignment: Alignment.centerLeft,
                 child: TopTodayMoviesView(),
               ),
-              ...List.generate(200, (index) {
-                return Center(child: Text('Move item $index'));
-              }),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: OnlyOnNetflixMoviesView(),
+              ),
             ],
           ),
         ),

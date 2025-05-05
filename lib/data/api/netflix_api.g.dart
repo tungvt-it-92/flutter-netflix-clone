@@ -10,7 +10,7 @@ part of 'netflix_api.dart';
 
 class _RestClient implements RestClient {
   _RestClient(this._dio, {this.baseUrl, this.errorLogger}) {
-    baseUrl ??= 'https://run.mocky.io/v3/';
+    baseUrl ??= 'https://netflix-mock-api.free.beeceptor.com';
   }
 
   final Dio _dio;
@@ -29,7 +29,7 @@ class _RestClient implements RestClient {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            '/38b954cd-63e2-42f0-9ec0-49cc7ef1256f',
+            '/today-movies',
             queryParameters: queryParameters,
             data: _data,
           )
